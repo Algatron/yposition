@@ -46,6 +46,12 @@ angular.module('mainApp', [])
             this.numRectangles = 1;
             this.reset(false);
             
+
+            this.config = { 
+                template: 'dhrtrthrtht',
+                trigger: 'click'
+            };
+
         }.bind(this);
 
 
@@ -56,6 +62,72 @@ angular.module('mainApp', [])
 
 })
 
+.directive('yPosition', function() {
+  return {
+    restrict: 'A',
+    scope: {
+        config: '=yPosition'
+    },
+    controllerAs: '$ctrl',
+    controller: function($scope, $element) {
+
+        function validateConfig(config) {
+            console.info(config);
+            if (!config.template) {
+                throw "yPosition config missing template!";
+            }
+        }
+
+        this.togglePoppup = function() {
+            if (this.popupDisplayed) {
+                this.hide();
+            } else {
+                this.show(); 
+            }
+        }.bind(this);
+
+        this.hide = function() {
+            if (this.popupDisplayed) {
+                this.popupElement.remove();
+                delete this.popupElement;
+            }
+            this.popupDisplayed = false; 
+        };
+
+        this.show = function() {
+            if (!this.popupDisplayed) {
+                var PRE = "<div data-uuid=" + this.uuid + ">";
+                var POST = "</div>";
+                this.popupElement = angular.element(PRE + this.config.template + POST);
+                this.popupElement.appendTo(this.bodyElement);
+            }
+            this.popupDisplayed = true;
+        };
+
+        this.$onInit = function() {
+
+            this.uuid = 245135134513431;
+            this.popupDisplayed = false;
+            this.bodyElement = $('body');
+            this.config = $scope.config;
+            
+            validateConfig(this.config);
+
+            angular.element($element).on('click', this.togglePoppup);
+
+
+        };
+
+        this.$onDestroy = function() {
+
+        };
+
+
+    }
+  };
+}) 
+
+
 .component('anchor', {
 
     template: "<div>Click me</div>",
@@ -63,44 +135,84 @@ angular.module('mainApp', [])
     controller: function($element, $interval, $window) {
 
         var popupColor = '#' + Math.round(0xffffff * Math.random()).toString(16);
-        var elem = angular.element("<div style='position: fixed; background-color: " + popupColor + "' id='template-div'>bla</div>");
+        var elem = angular.element("<div style='position: fixed; background-color: " + popupColor + "' id='template-div'></div>");
+
+        function calc(anchorBoundingClientRect, targetWidth, targetHeight, targetValign, targetHalign) {
+
+            var position = {
+                width: targetWidth,
+                height: targetHeight
+            };
+
+            switch (targetValign) {
+                case 'top':
+                    position.top = anchorBoundingClientRect.top - targetHeight;
+                    break;
+                case 'bottom':
+                default:
+                    position.top = anchorBoundingClientRect.bottom;
+            }
+
+            switch (targetHalign) {
+                case 'left':
+                    position.left = anchorBoundingClientRect.right - targetWidth;
+                    break;
+                case 'right':
+                default:
+                    position.left = anchorBoundingClientRect.left;
+            }
+
+            // if (targetValign === 'bottom' && targetHalign === 'right') {
+            //     return {
+            //         top: anchorBoundingClientRect.bottom,
+            //         left: anchorBoundingClientRect.left,
+                    
+            //     };
+            // }
+
+            return position;
+
+        }
+
+        this.recomputeLocation = function() {
+            var anchorBounds = $element[0].getBoundingClientRect();
+            var position = calc(anchorBounds, 
+                this.popupConfig.width, this.popupConfig.height,
+                this.popupConfig.valign, this.popupConfig.halign);
+            $('#template-div').css(position);
+        }.bind(this);
 
         this.togglePoppup = function() {
-
             var div = $('#template-div');
             if (div.length) {
                 div.remove();
             } else {
-                var anchor = $element[0];
-                var janchor = $(anchor);
-                angular.element(elem).appendTo(anchor);
-
-                var h = janchor.height();
-
-                var data = {
-                    top: janchor.offset().top + h - $window.scrollY,
-                    left: janchor.offset().left - $window.scrollX,
-                    width: this.popupConfig.width,
-                    height: this.popupConfig.height
-                }
-                $('#template-div').css(data);
+                angular.element(elem).appendTo($element[0]);
+                this.recomputeLocation();
             }
 
         }.bind(this);
 
+        this.$doCheck = function() {
+            var strConf = JSON.stringify(this.popupConfig);
+            if (strConf !== this.oldPopupConfig) {
+                this.recomputeLocation();
+                this.oldPopupConfig = strConf; 
+            }
+        }.bind(this);
+
         this.$onInit = function() {
-
             this.showPopup = false;
-
             $($element).css(this.cssConfig);
-
-            this.registeredEvents = 'click';
-            angular.element($element).on(this.registeredEvents, this.togglePoppup);
-
+            angular.element($element).on('click', this.togglePoppup);
+            angular.element($window).on('scroll', this.recomputeLocation);
+            angular.element($window).on('resize', this.recomputeLocation);
         };
 
         this.$onDestroy = function() {
-            angular.element($element).off(this.registeredEvents, this.togglePoppup);
+            angular.element($element).off('click', this.togglePoppup);
+            angular.element($window).off('scroll', this.recomputeLocation);
+            angular.element($window).off('resize', this.recomputeLocation);
         };
 
     },
