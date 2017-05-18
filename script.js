@@ -8,16 +8,16 @@ angular.module('mainApp', [])
     controller: function($window) {
 
         function generateRectangleCss(viewWidth, viewHeight) {
-            var divsize = ((Math.random() * 100) + 100).toFixed();
+            var recSize = ((Math.random() * 100) + 100).toFixed();
             var color = '#' + Math.round(0xffffff * Math.random()).toString(16);
-            var posx = (Math.random() * (viewWidth + 200 - divsize)).toFixed() - 100;
-            var posy = (Math.random() * (viewHeight + 200 - divsize)).toFixed() - 100;
+            var posx = (Math.random() * (viewWidth + 200 - recSize)).toFixed() - 100;
+            var posy = (Math.random() * (viewHeight + 200 - recSize)).toFixed() - 100;
 
             posy += 150;
 
             return {
-                'width': divsize + 'px',
-                'height': divsize + 'px',
+                'width': recSize + 'px',
+                'height': recSize + 'px',
                 'background-color': color,
                 'position': 'absolute',
                 'left': posx + 'px',
@@ -56,25 +56,36 @@ angular.module('mainApp', [])
 
 })
 
-.component('rec', {
+.component('anchor', {
 
-    template: "<div>Top:{{ $ctrl.data.top }}</div><div>Left:{{ $ctrl.data.left }}</div>" +
-    "<div data-ng-show='$ctrl.showPopup' id='template-div'></div>",
+    template: "<div>Click me</div>",
 
     controller: function($element, $interval, $window) {
 
-        this.togglePoppup = function() {
-            this.showPopup = !this.showPopup;
+        var popupColor = '#' + Math.round(0xffffff * Math.random()).toString(16);
+        var elem = angular.element("<div style='position: fixed; background-color: " + popupColor + "' id='template-div'>bla</div>");
 
-            if (this.showPopup) {
+        this.togglePoppup = function() {
+
+            var div = $('#template-div');
+            if (div.length) {
+                div.remove();
+            } else {
+                var anchor = $element[0];
+                var janchor = $(anchor);
+                angular.element(elem).appendTo(anchor);
+
+                var h = janchor.height();
+
                 var data = {
-                    top: $($element[0]).offset().top - $window.scrollY,
-                    left: $($element[0]).offset().left - $window.scrollX,
+                    top: janchor.offset().top + h - $window.scrollY,
+                    left: janchor.offset().left - $window.scrollX,
                     width: this.popupConfig.width,
                     height: this.popupConfig.height
                 }
                 $('#template-div').css(data);
             }
+
         }.bind(this);
 
         this.$onInit = function() {
@@ -95,7 +106,6 @@ angular.module('mainApp', [])
     },
 
     bindings: {
-        recId: '<',
         cssConfig: '<',
         popupConfig: '<'
     }

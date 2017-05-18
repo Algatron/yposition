@@ -14,7 +14,7 @@
 		</div>
 		<div class="col col-xs-4">
 			<div class="col ">
-				<h5>Target position: {{ $ctrl.target.valign + "-" + $ctrl.target.halign }}</h5>
+				<h4>Target position: {{ $ctrl.target.valign + "-" + $ctrl.target.halign }}</h4>
 				<div class="btn-group" role="group">
 					<button type="button" 
 						ng-class="{ 'btn btn-default': true, 'btn-primary': $ctrl.target.halign == 'left' }" 
@@ -34,12 +34,13 @@
 			</div>
 		</div>
 		<div class="col col-xs-3">
-			<h5>Target Size</h5>	
-			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.width">Width: {{ $ctrl.target.width }}</input>
-			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.height">Height: {{ $ctrl.target.height }}</input>
+			<h4>Target Width: {{ $ctrl.target.width }}</h4>
+			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.width">
+			<h4>Target Height: {{ $ctrl.target.height }}</h4>
+			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.height">
 		</div>
 	</div>
 	<span data-ng-repeat="config in $ctrl.configs">
-		<rec rec-id="$index" css-config="config"></rec>
+		<anchor css-config="config" popup-config="$ctrl.target"></anchor>
 	</span>
 </div>
