@@ -1,9 +1,9 @@
 <div class="container">	
-	<h2>Test Setup for boundary calculations</h2>
+	<h3>Test Setup for boundary calculations</h3>
 	<!-- <div> -->
 		<!-- <input type="text" data-ng-model="$ctrl.numRectangles" /> -->
 	<!-- </div> -->
-	<div class="row">
+<!-- 	<div class="row">
 		<div class="col col-xs-3">
 			<div>
 				<button class="btn btn btn-danger" data-ng-click="$ctrl.reset()">New Anchor</button>
@@ -39,9 +39,61 @@
 			<h4>Target Height: {{ $ctrl.target.height }}</h4>
 			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.height">
 		</div>
+	</div> -->
+	<!-- <span data-ng-repeat="config in $ctrl.configs"> -->
+		<!-- <anchor css-config="config" popup-config="$ctrl.target"></anchor> -->
+	<!-- </span> -->
+
+	<div class="row">
+		Window size: {{ $ctrl.windowWidth }}x{{ $ctrl.windowHeight }}
 	</div>
-	<span data-ng-repeat="config in $ctrl.configs">
-		<anchor css-config="config" popup-config="$ctrl.target"></anchor>
-	</span>
-	<span style="background-color: grey; padding: 10px" y-position="$ctrl.config">Some Span</span>
+	<div class="row">
+		<div class="col col-xs-6">
+			<h4>Anchor Config</h4>
+			<div>Left: <input type="number" data-ng-model="$ctrl.anchorCss.left" data-ng-change="$ctrl.updateAnchorLocation()"/></div>
+			<div>Top: <input type="number" data-ng-model="$ctrl.anchorCss.top" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
+			<div>Width: <input type="number" data-ng-model="$ctrl.anchorCss.width" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
+			<div>Height: <input type="number" data-ng-model="$ctrl.anchorCss.height" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
+		</div>
+		<div class="col col-xs-6">
+			<h4>Popup Config</h4>
+			<div class="col col-xs-12">
+				<div class="col col-xs-12">
+					Position {{ $ctrl.popupConfig.valign + "-" + $ctrl.popupConfig.halign }}
+				</div>
+				<div class="col col-xs-4">
+					<div class="btn-group-vertical" role="group">
+						<button type="button" 
+							ng-class="{ 'btn btn-sm btn-default': true, 'btn-primary': $ctrl.popupConfig.valign == 'top' }" 
+							data-ng-click="$ctrl.popupConfig.valign = 'top'">Top</button>
+						<button type="button" 
+							ng-class="{ 'btn btn-sm btn-default': true, 'btn-primary': $ctrl.popupConfig.valign == 'bottom' }" 
+							data-ng-click="$ctrl.popupConfig.valign = 'bottom'">Bottom</button>
+					</div>
+				</div>
+				<div class="col col-xs-8">
+					<div class="btn-group" role="group">
+						<button type="button" 
+							ng-class="{ 'btn btn-sm btn-default': true, 'btn-primary': $ctrl.popupConfig.halign == 'left' }" 
+							data-ng-click="$ctrl.popupConfig.halign = 'left'">Left</button>
+						<button type="button" 
+							ng-class="{ 'btn btn-sm btn-default': true, 'btn-primary': $ctrl.popupConfig.halign == 'right' }" 
+							data-ng-click="$ctrl.popupConfig.halign = 'right'">Right</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col col-12">
+			<h5>
+				Popup html context:
+			</h5>
+			<textarea data-ng-model="$ctrl.popupConfig.template"></textarea>
+		</div>
+	</div>
+	<div id="anchor" y-position="$ctrl.popupConfig">Some Anchor</div>
+	<h3></h3>
+<!-- 		<div style="background-color: grey; margin: 5; padding: 5" y-position="$ctrl.config">Some Span</div> -->
+	</div>
 </div>
