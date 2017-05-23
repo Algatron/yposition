@@ -1,61 +1,19 @@
 <div class="container">	
 	<h3>Test Setup for boundary calculations</h3>
-	<!-- <div> -->
-		<!-- <input type="text" data-ng-model="$ctrl.numRectangles" /> -->
-	<!-- </div> -->
-<!-- 	<div class="row">
-		<div class="col col-xs-3">
-			<div>
-				<button class="btn btn btn-danger" data-ng-click="$ctrl.reset()">New Anchor</button>
-			</div>
-			<h5>
-				<button class="btn btn btn-warning" data-ng-click="$ctrl.reset(true)">Keep target</button>
-			</h5>
-		</div>
-		<div class="col col-xs-4">
-			<div class="col ">
-				<h4>Target position: {{ $ctrl.target.valign + "-" + $ctrl.target.halign }}</h4>
-				<div class="btn-group" role="group">
-					<button type="button" 
-						ng-class="{ 'btn btn-default': true, 'btn-primary': $ctrl.target.halign == 'left' }" 
-						data-ng-click="$ctrl.target.halign = 'left'">Left</button>
-					<button type="button" 
-						ng-class="{ 'btn btn-default': true, 'btn-primary': $ctrl.target.halign == 'right' }" 
-						data-ng-click="$ctrl.target.halign = 'right'">Right</button>
-				</div>
-				<div class="btn-group-vertical" role="group">
-					<button type="button" 
-						ng-class="{ 'btn btn-default': true, 'btn-primary': $ctrl.target.valign == 'top' }" 
-						data-ng-click="$ctrl.target.valign = 'top'">Top</button>
-					<button type="button" 
-						ng-class="{ 'btn btn-default': true, 'btn-primary': $ctrl.target.valign == 'bottom' }" 
-						data-ng-click="$ctrl.target.valign = 'bottom'">Bottom</button>
-				</div>
-			</div>
-		</div>
-		<div class="col col-xs-3">
-			<h4>Target Width: {{ $ctrl.target.width }}</h4>
-			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.width">
-			<h4>Target Height: {{ $ctrl.target.height }}</h4>
-			<input type="range" min="50" max="1000" data-ng-model="$ctrl.target.height">
-		</div>
-	</div> -->
-	<!-- <span data-ng-repeat="config in $ctrl.configs"> -->
-		<!-- <anchor css-config="config" popup-config="$ctrl.target"></anchor> -->
-	<!-- </span> -->
-
 	<div class="row">
-		Window size: {{ $ctrl.windowWidth }}x{{ $ctrl.windowHeight }}
+		<div class="col">
+			Window size: {{ $ctrl.windowWidth }}x{{ $ctrl.windowHeight }}
+		</div>
 	</div>
 	<div class="row">
-		<div class="col col-xs-6">
+		<div class="col col-xs-3">
 			<h4>Anchor Config</h4>
 			<div>Left: <input type="number" data-ng-model="$ctrl.anchorCss.left" data-ng-change="$ctrl.updateAnchorLocation()"/></div>
 			<div>Top: <input type="number" data-ng-model="$ctrl.anchorCss.top" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
 			<div>Width: <input type="number" data-ng-model="$ctrl.anchorCss.width" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
 			<div>Height: <input type="number" data-ng-model="$ctrl.anchorCss.height" data-ng-change="$ctrl.updateAnchorLocation()" /></div>
 		</div>
-		<div class="col col-xs-6">
+		<div class="col col-xs-4">
 			<h4>Popup Config</h4>
 			<div class="col col-xs-12">
 				<div class="col col-xs-12">
@@ -83,17 +41,68 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col col-12">
-			<h5>
-				Popup html context:
-			</h5>
+		<div class="col col-xs-3">
+			<h4>Popup html content</h4>
 			<textarea data-ng-model="$ctrl.popupConfig.template"></textarea>
 		</div>
 	</div>
-	<div id="anchor" y-position="$ctrl.popupConfig">Some Anchor</div>
-	<h3></h3>
-<!-- 		<div style="background-color: grey; margin: 5; padding: 5" y-position="$ctrl.config">Some Span</div> -->
-	</div>
+
+
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+
+
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	
+
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+	<div>blabla</div>
+
+<!--   <div id="c1" style="display: block; white-space: nowrap; width: 300px; height: 300px; overflow: auto; max-height: 200px; max-width: 200px; background: blue">
+    some content<br/>
+    some content<br/>
+    some content<br/>
+    some contfdqwfwqawEFWEF WEFD we fWEF efwef ent<br/>
+    some conwfe awff awef <wbr>qf tent<br/>
+    some content<br/>
+    some content<br/>
+    some contfdqwfwqawEFWEF WEFD we fWEF efwef ent<br/>
+    some conwfe awff awef <wbr>qf tent<br/>
+    some content<br/>
+    some content
+    <div style="position: relative; white-space: normal" id="anchor" y-position="$ctrl.popupConfig">Some Anchor</div>
+    aqerfgerfg
+  </div> -->
+<div id="anchor" y-position="$ctrl.popupConfig">Some Anchor</div>
+
+	
+
 </div>
